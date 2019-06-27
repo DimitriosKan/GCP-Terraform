@@ -93,7 +93,7 @@ resource "azurerm_virtual_machine" "main" {
 		disable_password_authentication = true
 		ssh_keys {
 		path 		= "/home/dekay/.ssh/id_rsa.pub"
-		key_data 	= "${file("/home/nexus/.ssh/id_rsa.pub")}"
+		key_data 	= file("~/.ssh/id_rsa.pub")
 	  }
 	}
 	provisioner "remote-exec" {
