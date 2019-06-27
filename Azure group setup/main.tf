@@ -25,7 +25,7 @@ resource "azurerm_subnet" "internal" {
 	address_prefix		= "10.0.2.0/24"
 }
 
-ip_configuration "azurerm_public_ip" "main" {
+resource "azurerm_public_ip" "main" {
 	name			= "pubIP"
 	location		= "${azurerm_resource_group.main.location}"
 	resource_group_name	= "${azurerm_resource_group.main.name}"
@@ -55,7 +55,7 @@ resource "azurerm_network_interface" "main" {
 	name			= "${var.prefix}-nic"
 	location		= "${azurerm_resource_group.main.location}"
 	resource_group_name	= "${azurerm_resource_group.main.name}"
-	network_security_group_id = "azurerm_network_security_group.main.id"
+	network_security_group_id = "${azurerm_network_security_group.main.id}"
 
 	ip_configuration {
 	  name			= "ipconfiguration"
@@ -92,16 +92,21 @@ resource "azurerm_virtual_machine" "main" {
 	os_profile_linux_config {
 		disable_password_authentication = true
 		ssh_keys {
-		path 		= "/home/dekay/.ssh/id_rsa.pub"
+		path 		= "/home/deekay/.ssh/authorized_keys"
 		key_data 	= file("~/.ssh/id_rsa.pub")
 	  }
 	}
 	provisioner "remote-exec" {
-	  inline = ["sudo apt update", "sudo apt install -y jq"]
+	  inline = [
+		"sudo apt update",
+		"sudo apt install -y jq",
+		"git clone -b dev --single-branch  https://github.com/DimitriosKan/Terraform-Deployment.git"
+		
+		]
 	  connection {
 		type = "ssh"
 		user = "deekay"
-		private_key = file("/home/deekay/.ssh/id_rsa")
+		private_key = file("/home/nexus/.ssh/id_rsa")
 		host = "${azurerm_public_ip.main.fqdn}"
 	}
     }

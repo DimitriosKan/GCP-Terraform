@@ -8,7 +8,7 @@ sudo apt install -y unzip wget
 
 # Terraform install
 
-wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.12.3/terraform_0.12.3_linux_amd64.zip
 
 unzip terraform_*_linux_*.zip
 
@@ -35,3 +35,11 @@ echo Continue to Azure login
 az login
 
 read
+
+terraform init
+
+echo Terraform initialized
+
+terraform validate
+
+terraform apply
