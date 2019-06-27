@@ -1,16 +1,37 @@
 #!/bin/bash
 
+# apt updates and housekeeping
+
 sudo apt update
 
 sudo apt install -y unzip wget
+
+# Terraform install
 
 wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
 
 unzip terraform_*_linux_*.zip
 
-sudo mv terraform /usr/location/bin
+echo move to bin
+read
+
+sudo mv terraform /usr/local/bin
+
+echo remove zip
+read
 
 rm terraform_*_linux_*.zip
 
 echo Terraform was installed
 terraform --version
+
+echo Continue to Azure setup
+read
+
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+echo Continue to Azure login
+
+az login
+
+read
