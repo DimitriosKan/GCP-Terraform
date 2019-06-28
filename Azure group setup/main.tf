@@ -100,7 +100,7 @@ resource "azurerm_virtual_machine" "main" {
 	  inline = [
 		"sudo apt update",
 		"sudo apt install -y jq",
-		"git clone -b dev --single-branch  https://github.com/DimitriosKan/Terraform-Deployment.git"
+		"git clone -b dev --single-branch  https://github.com/DimitriosKan/Jenkins-Auto-Setup.git"
 		
 		]
 	  connection {

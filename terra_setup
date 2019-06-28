@@ -8,7 +8,11 @@ sudo apt install -y unzip wget
 
 # Terraform install
 
-wget https://releases.hashicorp.com/terraform/0.12.3/terraform_0.12.3_linux_amd64.zip
+	#	grep latest version
+VERSN="$(curl -sL "https://releases.hashicorp.com/terraform/" | grep -v beta | grep -Po "_(\d*\.?){3}" | sed "s/.//" | sort -V | tail -1)"
+	#	grep latest version
+
+wget https://releases.hashicorp.com/terraform/${VERSN}/terraform_${VERSN}_linux_amd64.zip
 
 unzip terraform_*_linux_*.zip
 
