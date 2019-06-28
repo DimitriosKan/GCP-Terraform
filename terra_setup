@@ -38,7 +38,11 @@ echo Continue to Azure login
 
 az login
 
+# comment out if terraforming manually #
+echo Initialize terraform job
 read
+
+cd Azure\ group\ setup/
 
 terraform init
 
@@ -47,3 +51,4 @@ echo Terraform initialized
 terraform validate
 
 terraform apply
+# comment out if terraforming manually #
