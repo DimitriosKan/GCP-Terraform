@@ -29,20 +29,24 @@ rm terraform_*_linux_*.zip
 echo Terraform was installed
 terraform --version
 
-echo Continue to Azure setup
+echo Continue to GCP setup
 read
 
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+if type gcloud; then
+	echo "gCloud is installed"
+else
+	curl -sL https://sdk.cloud.google.com | sudo bash
+fi
 
-echo Continue to Azure login
+	# echo Continue to Azure login
 
-az login
+	# az login
 
 # comment out if terraforming manually #
 echo Initialize terraform job
 read
 
-cd Azure\ group\ setup/
+cd GCP\ group\ setup/
 
 terraform init
 
