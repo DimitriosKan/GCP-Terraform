@@ -20,8 +20,8 @@ resource "google_compute_instance" "python" {
         }
         connection {
                 type = "ssh"
-                user = "python"
-                host = "${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
+                user = "terraform"
+                host = "${google_compute_instance.python.network_interface.0.access_config.0.nat_ip}"
                 private_key = "${file("${var.private_key}")}"
         }
         provisioner "remote-exec" {
@@ -31,7 +31,7 @@ resource "google_compute_instance" "python" {
                 ]
         }
         provisioner "remote-exec" {
-                scripts = ["scripts/test1.sh", "scripts/test2.sh"]
+                scripts = ["scripts/python_tf_script"]
         }
 }
 

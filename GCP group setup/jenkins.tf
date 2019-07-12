@@ -20,8 +20,8 @@ resource "google_compute_instance" "jenkins" {
         }
         connection {
                 type = "ssh"
-                user = "jenkins"
-                host = "${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
+                user = "terraform"
+                host = "${google_compute_instance.jenkins.network_interface.0.access_config.0.nat_ip}"
                 private_key = "${file("${var.private_key}")}"
         }
         provisioner "remote-exec" {
@@ -31,6 +31,6 @@ resource "google_compute_instance" "jenkins" {
                 ]
         }
         provisioner "remote-exec" {
-                scripts = ["scripts/test1.sh", "scripts/test2.sh"]
+                scripts = ["scripts/jenkins_tf_script"]
         }
 }
