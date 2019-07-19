@@ -17,12 +17,12 @@ wget https://releases.hashicorp.com/terraform/${VERSN}/terraform_${VERSN}_linux_
 unzip terraform_*_linux_*.zip
 
 echo move to bin
-read
+#read
 
 sudo mv terraform /usr/local/bin
 
 echo remove zip
-read
+#read
 
 rm terraform_*_linux_*.zip
 
@@ -30,7 +30,7 @@ echo Terraform was installed
 terraform --version
 
 echo Continue to GCP setup
-read
+#read
 
 if type gcloud; then
 	echo "gCloud is installed"
@@ -38,21 +38,48 @@ else
 	curl -sL https://sdk.cloud.google.com | sudo bash
 fi
 
-	# echo Continue to Azure login
+	# gcp login
 
-	# az login
 
-# comment out if terraforming manually #
-echo Initialize terraform job
-read
+# if type *GCP Project*; then
+# 	echo "continue"
+# else
+#	gcloud project create *GCP Project*
+# fi
+	
+# choose to continue with terraforming or not
 
-cd GCP\ group\ setup/
+while true; do
+  read -r -p "Initialize terraforming [Yes/No] ? " yn
+  case $yn in
+    [Yy][Ee][sS]|[yY]* )
+	cd GCP\ group\ setup/
+	terraform init
+	echo "Terraform initialized";
+	echo "*  *  *  *  *"
+	echo "*  *  *  *  *"
+	terraform validate
+	echo "*  *  *  *  *"
+	echo "*  *  *  *  *"
+	terraform plan
+	echo "*  *  *  *  *"
+	echo "*  *  *  *  *"
+	break;;
+    [Nn][Oo]|[nN]* )
+	echo "Make your edits to the terraform files";
+	exit;;
+    * ) echo "Pick a valid input ...";;
+  esac
+done
 
-terraform init
+# 'terraform apply' prompt
 
-echo Terraform initialized
+read -p "Apply above Terraform[Yy]? " -n 1 -r
+echo
 
-terraform validate
+if [[ $REPLY =~ ^[Yy] ]];
 
-terraform apply
-# comment out if terraforming manually #
+then
+        echo Applying ...
+	terraform apply
+fi

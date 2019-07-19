@@ -1,5 +1,8 @@
 #!/bin/bash
 
 echo test3
-
+#
+# insert a git pull for the python setup HERE
+# run python install script here
+#
 touch itworksFURTHEST.txt
